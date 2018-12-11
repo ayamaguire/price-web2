@@ -1,0 +1,2 @@
+EMAIL = 'email'
+HASHED = 'hashed'
