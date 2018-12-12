@@ -4,6 +4,11 @@ from flask import Blueprint
 alert_blueprint = Blueprint(name="alerts", import_name=__name__)
 
 
+@alert_blueprint.route('/')
+def index():
+    return "This is the alerts index"
+
+
 @alert_blueprint.route('/new', methods=['POST'])
 def create_alert():
     pass

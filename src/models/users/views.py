@@ -37,9 +37,14 @@ def register_user():
     return render_template('users/register.html')
 
 
-@user_blueprint.route('/alerts')
-def user_alerts():
-    return "This is the alerts page."
+@user_blueprint.route('/profile')
+def user_profile():
+    return "This is the profile page."
+
+
+@user_blueprint.route('/settings')
+def user_settings():
+    return "This is the settings page"
 
 
 @user_blueprint.route('/logout')

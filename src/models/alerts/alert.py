@@ -64,11 +64,11 @@ class Alert(object):
 
     def send_if_price_reached(self):
         if self.item.price <= self.price_limit:
-            self.send()
+            return self.send()
 
 
 def check_alerts():
     alerts = Alert.find_needing_update()
     for alert in alerts:
         alert.update_price()
-        alert.send_if_price_reached()
+        return alert.send_if_price_reached()
