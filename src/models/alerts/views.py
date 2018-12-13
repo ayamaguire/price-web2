@@ -1,12 +1,12 @@
-from flask import Blueprint
+import flask
 
 
-alert_blueprint = Blueprint(name="alerts", import_name=__name__)
+alert_blueprint = flask.Blueprint(name="alerts", import_name=__name__)
 
 
 @alert_blueprint.route('/')
 def index():
-    return "This is the alerts index"
+    return flask.render_template('users/alerts.html')
 
 
 @alert_blueprint.route('/new', methods=['POST'])

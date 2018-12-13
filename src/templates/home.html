@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-This is the home page
+<div class="jumbotron">
+    <center>
+        <h1 class="display-4">Price Tracking for You</h1>
+        <p class="lead">Make customized email alerts. Get notified. Don't miss out on deals that matter.</p>
+        <!-- <hr class="my-4"> -->
+        <p>Ready to get started?</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('users.register_user') }}" role="button">Register Now</a>
+    </center>
+</div>
 
 {% endblock %}
