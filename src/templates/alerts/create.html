@@ -15,7 +15,10 @@
 
         <div class="form-group">
             <label for="desired_price">Desired Price</label>
-            <input type="text" class="form-control" id="desired_price" name="desired_price" placeholder="$100">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend2">$</span>
+                <input type="number" class="form-control" id="desired_price" name="desired_price" placeholder="100">
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary button-right">Create Alert</button>

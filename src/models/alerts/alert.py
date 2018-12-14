@@ -10,12 +10,13 @@ from src.models.items import item
 
 class Alert(object):
 
-    def __init__(self, user_email, item_id, price_limit, last_checked=None, _id=None):
+    def __init__(self, user_email, item_id, price_limit, last_checked=None, last_price=None, _id=None):
         self.user_email = user_email
         self.item_id = item_id
         self.item = item.Item.get_by_id(self.item_id)
-        self.price_limit = price_limit
+        self.price_limit = float(price_limit)
         self.last_checked = last_checked or datetime.datetime.utcnow()
+        self.last_price = last_price
         self._id = _id or uuid.uuid4().hex
 
     def __repr__(self):
@@ -26,6 +27,7 @@ class Alert(object):
                 dbc.ITEM_ID: self.item_id,
                 dbc.PRICE_LIMIT: self.price_limit,
                 dbc.LAST_CHECKED: self.last_checked,
+                dbc.LAST_PRICE: self.last_price,
                 dbc.SELF_ID: self._id}
         return json
 
@@ -68,7 +70,7 @@ class Alert(object):
         return [cls(**elem) for elem in data]
 
     def update_price(self):
-        self.item.load_price()
+        self.last_price = self.item.load_price()
         self.last_checked = datetime.datetime.utcnow()
         self.save_to_db()
 

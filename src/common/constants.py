@@ -17,6 +17,7 @@ USER_EMAIL = "user_email"
 ITEM_ID = "item_id"
 PRICE_LIMIT = "price_limit"
 LAST_CHECKED = "last_checked"
+LAST_PRICE = "last_price"
 ALERTS = "alerts"
 
 # store

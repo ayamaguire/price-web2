@@ -18,9 +18,10 @@
                       enctype="multipart/form-data">
                     <div class="form-group mx-sm-3 mb-2">
                         {{ name_form.csrf_token }}
-                        {{ name_form.name(placeholder=alert.item.name) }}
+                        {{ name_form.name(placeholder=alert.item.name, class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ name_form.submit1(class="btn btn-primary") }}
                     </div>
-                    {{ name_form.submit1 }}
                 </form>
             </div>
         </div>
@@ -42,9 +43,10 @@
                       enctype="multipart/form-data">
                     <div class="form-group mx-sm-3 mb-2">
                         {{ url_form.csrf_token }}
-                        {{ url_form.name(placeholder=alert.item.url) }}
+                        {{ url_form.name(placeholder=alert.item.url, class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ url_form.submit2(class="btn btn-primary") }}
                     </div>
-                    {{ url_form.submit3 }}
                 </form>
             </div>
         </div>
@@ -66,9 +68,12 @@
                       enctype="multipart/form-data">
                     <div class="form-group mx-sm-3 mb-2">
                         {{ price_form.csrf_token }}
-                        {{ price_form.name(placeholder=alert.price_limit) }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupPrepend2">$</span></div>
+                        {{ price_form.name(placeholder=alert.price_limit, type="number", class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ price_form.submit3(class="btn btn-primary") }}
                     </div>
-                    {{ price_form.submit3 }}
                 </form>
             </div>
         </div>

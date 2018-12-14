@@ -54,3 +54,8 @@ class Store(object):
             if len(search) == 1:
                 return cls(**search[0])
         raise StoresExceptions.StoreNotFoundError(message="The store {} did not match any existing stores.".format(url))
+
+    @classmethod
+    def get_all(cls):
+        data = database.Database.find(collection=dbc.STORES, query={})
+        return [cls(**elem) for elem in data]

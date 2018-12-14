@@ -7,7 +7,16 @@
     Your alerts:
         <div class="list-group">
         {% for alert in alerts %}
-            <a href="{{ alert.item.url }}" target="_blank" class="list-group-item list-group-item-action">
+            {% if fetched %}
+                {% if alert.last_price <= alert.price_limit %}
+                    {% set class="list-group-item list-group-item-success" %}
+                {% else %}
+                    {% set class="list-group-item list-group-item-danger" %}
+                {% endif %}
+            {% else %}
+                {% set class="list-group-item" %}
+            {% endif %}
+            <a href="{{ alert.item.url }}" target="_blank" class="{{ class }}">
                 <span class="alignleft">
                     {{ alert.item.name.capitalize() }} with desired price ${{ alert.price_limit }}
                 </span>
@@ -25,6 +34,11 @@
             </a>
         {% endfor %}
         </div>
+    <br>
+    <a class="btn btn-primary" href="{{ url_for('alerts.create_alert') }}" role="button">Create New Alert</a>
+    <form action="{{ url_for('alerts.fetch_prices') }}" method="post" class="alignright">
+        <button class="btn btn-dark" type="submit" >Fetch Prices</button>
+    </form>
     {% else %}
     You have no alerts! Would you like to <a href="{{ url_for('alerts.create_alert') }}">add one?</a>
     {% endif %}

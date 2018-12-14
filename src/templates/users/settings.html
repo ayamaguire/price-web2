@@ -18,9 +18,10 @@
                       enctype="multipart/form-data">
                     <div class="form-group mx-sm-3 mb-2">
                         {{ email_form.csrf_token }}
-                        {{ email_form.name(placeholder=session['email']) }}
+                        {{ email_form.name(placeholder=session['email'], class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ email_form.submit1(class="btn btn-primary") }}
                     </div>
-                    {{ email_form.submit1 }}
                 </form>
             </div>
         </div>
@@ -42,9 +43,10 @@
                       enctype="multipart/form-data">
                     <div class="form-group mx-sm-3 mb-2">
                         {{ password_form.csrf_token }}
-                        {{ password_form.name(type="password") }}
+                        {{ password_form.name(type="password", class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ password_form.submit2(class="btn btn-primary") }}
                     </div>
-                    {{ password_form.submit2 }}
                 </form>
             </div>
         </div>

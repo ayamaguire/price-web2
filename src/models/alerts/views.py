@@ -13,6 +13,9 @@ alert_blueprint = flask.Blueprint(name="alerts", import_name=__name__)
 
 @alert_blueprint.route('/')
 def index():
+    email = flask.session['email']
+    if not email:
+        return flask.render_template('users/login.html')
     user_alerts = alert.Alert.get_by_email(flask.session['email'])
     return flask.render_template('alerts/index.html', alerts=user_alerts)
 
@@ -28,8 +31,7 @@ def create_alert():
             new_item.save_to_db()
             new_alert = alert.Alert(user_email=flask.session['email'], item_id=new_item._id, price_limit=desired_price)
             new_alert.update_price()
-            user_alerts = alert.Alert.get_by_email(flask.session['email'])
-            return flask.render_template('alerts/index.html', alerts=user_alerts)
+            return flask.redirect(flask.url_for('alerts.index'))
         except StoreExceptions.StoreNotFoundError:
             return flask.render_template('stores/create.html', url=url)
 
@@ -76,9 +78,16 @@ def edit_alert(alert_id):
                                  price_form=price_form)
 
 
-@alert_blueprint.route('<string:alert_id>')
-def get_alert_page(alert_id):
-    pass
+@alert_blueprint.route('/fetch', methods=["POST"])
+def fetch_prices():
+    email = flask.session['email']
+    if not email:
+        return flask.render_template('users/login.html')
+    user_alerts = alert.Alert.get_by_email(email)
+    for elem in user_alerts:
+        elem.item.load_price()
+    user_alerts = alert.Alert.get_by_email(flask.session['email'])
+    return flask.render_template('alerts/index.html', alerts=user_alerts, fetched=True)
 
 
 @alert_blueprint.route('/for_user/<string:user_id>')
