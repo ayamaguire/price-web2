@@ -3,3 +3,6 @@ pymongo==3.7.2
 beautifulsoup4==4.6.3
 passlib==1.7.1
 requests==2.20.1
+Flask-WTF==0.14.2
+WTForms==2.2.1
+

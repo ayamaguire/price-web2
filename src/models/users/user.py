@@ -8,8 +8,13 @@ from src.models.users import exceptions as UserExceptions
 class User(object):
 
     def __init__(self, email, password, _id=None):
+        """
+        :param email: user email
+        :param password: USER EMAIL MUST BE PASSED IN ALREADY ENCRYPTED
+        :param _id:
+        """
         self.email = email
-        self.password = utils.Utils.encrypt_password(password)
+        self.password = password
         self._id = _id or uuid.uuid4().hex
 
     def __repr__(self):
@@ -22,12 +27,19 @@ class User(object):
         return json
 
     def save_to_db(self):
-        database.Database.insert(collection=dbc.USERS,
+        database.Database.update(collection=dbc.USERS,
+                                 query={dbc.SELF_ID: self._id},
                                  data=self.make_json())
 
     @classmethod
     def get_by_id(cls, _id):
         data = database.Database.find_one(collection=dbc.USERS, query={dbc.SELF_ID: _id})
+        if data is not None:
+            return cls(**data)
+
+    @classmethod
+    def get_by_email(cls, email):
+        data = database.Database.find_one(collection=dbc.USERS, query={dbc.EMAIL: email})
         if data is not None:
             return cls(**data)
 

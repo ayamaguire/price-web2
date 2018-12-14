@@ -14,12 +14,13 @@
 
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#settings">
             <div class="card-body settings-button">
-                <form class="form-inline">
+                <form class="form-inline" method="post" action="{{ url_for('users.user_settings') }}" ,
+                      enctype="multipart/form-data">
                     <div class="form-group mx-sm-3 mb-2">
-                        <label for="inputPassword2" class="sr-only">Password</label>
-                        <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                        {{ email_form.csrf_token }}
+                        {{ email_form.name(placeholder=session['email']) }}
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2">Update</button>
+                    {{ email_form.submit1 }}
                 </form>
             </div>
         </div>
@@ -37,7 +38,14 @@
 
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#settings">
             <div class="card-body">
-                Update password here
+                <form class="form-inline" method="post" action="{{ url_for('users.user_settings') }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ password_form.csrf_token }}
+                        {{ password_form.name(type="password") }}
+                    </div>
+                    {{ password_form.submit2 }}
+                </form>
             </div>
         </div>
     </div>
