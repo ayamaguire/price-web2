@@ -39,8 +39,6 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% if session['email'] %}
-                            <a class="dropdown-item" href="{{ url_for('users.user_profile') }}"><i class="fas fa-user-circle fa-sm"></i> Profile</a>
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url_for('users.user_settings') }}"><i class="fas fa-cog fa-sm"></i> Settings</a>
                             <a class="dropdown-item" href="{{ url_for('users.logout_user') }}"><i class="fas fa-user-slash fa-sm"></i> Log out</a>
                         {% else %}

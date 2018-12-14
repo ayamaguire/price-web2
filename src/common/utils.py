@@ -32,5 +32,5 @@ class Utils(object):
         :param str email: Email to validate
         :return: True if email is str@str.str, False otherwise
         """
-        email_match = re.compile('^[\w-]+@([\w-]+\.)+[\w]+$')
+        email_match = re.compile('^([\w-]+\.)+[\w]+@([\w-]+\.)+[\w]+$')
         return email_match.match(email) is not None

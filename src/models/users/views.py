@@ -4,6 +4,7 @@ import wtforms
 
 from src.models.users import constants
 from src.models.users import user, exceptions
+from src.models.alerts import alert
 from src.common import utils
 
 
@@ -19,7 +20,7 @@ def login_user():
         try:
             if user.User.user_valid(email, password):
                 flask.session[constants.EMAIL] = email
-                return flask.redirect(flask.url_for('.user_profile'))
+                return flask.redirect(flask.url_for('alerts.index'))
         except exceptions.UserError as e:
             return e.message
     return flask.render_template('users/login.html')
@@ -33,15 +34,17 @@ def register_user():
         try:
             if user.User.register_user(email, password):
                 flask.session[constants.EMAIL] = email
-                return flask.redirect(flask.url_for('.user_profile'))
+                return flask.redirect(flask.url_for('alerts.index'))
         except exceptions.UserError as e:
             return e.message
     return flask.render_template('users/register.html')
 
 
-@user_blueprint.route('/profile')
-def user_profile():
-    return flask.render_template('users/alerts.html')
+# TODO: if user needs a profile, it should be separate from the alerts page
+# @user_blueprint.route('/profile')
+# def user_profile():
+#     user_alerts = alert.Alert.get_by_email(flask.session['email'])
+#     return flask.render_template('alerts/index.html', alerts=user_alerts)
 
 
 @user_blueprint.route('/settings', methods=['GET', 'POST'])
@@ -51,7 +54,7 @@ def user_settings():
     password_form = UpdatePasswordForm()
     if not email:
         # this means the user navigated directly to this page, because we don't show this link when not logged in
-        return flask.render_template('users/login.html', email_form=email_form, password_form=password_form)
+        return flask.render_template('users/login.html')
     current_user = user.User.get_by_email(email)
     if flask.request.method == 'POST':
         if email_form.data and email_form.submit1.data:

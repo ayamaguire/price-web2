@@ -1,6 +1,80 @@
 {% extends 'base.html' %}
 {% block content %}
 
-Edit an alert
+<div class="accordion settings" id="edit">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                    Update Item Name
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#edit">
+            <div class="card-body settings-button">
+                <form class="form-inline" method="post" action="{{ url_for('alerts.edit_alert', alert_id=alert._id) }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ name_form.csrf_token }}
+                        {{ name_form.name(placeholder=alert.item.name) }}
+                    </div>
+                    {{ name_form.submit1 }}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="false" aria-controls="collapseTwo">
+                    Update Item URL
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#edit">
+            <div class="card-body">
+                <form class="form-inline" method="post" action="{{ url_for('alerts.edit_alert', alert_id=alert._id) }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ url_form.csrf_token }}
+                        {{ url_form.name(placeholder=alert.item.url) }}
+                    </div>
+                    {{ url_form.submit3 }}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="false" aria-controls="collapseThree">
+                    Update Desired Price
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#edit">
+            <div class="card-body">
+                <form class="form-inline" method="post" action="{{ url_for('alerts.edit_alert', alert_id=alert._id) }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ price_form.csrf_token }}
+                        {{ price_form.name(placeholder=alert.price_limit) }}
+                    </div>
+                    {{ price_form.submit3 }}
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 
 {% endblock %}

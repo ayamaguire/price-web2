@@ -30,7 +30,8 @@ class Item(object):
         return json
 
     def save_to_db(self):
-        database.Database.insert(collection=dbc.ITEMS,
+        database.Database.update(collection=dbc.ITEMS,
+                                 query={dbc.SELF_ID: self._id},
                                  data=self.make_json())
 
     @classmethod
@@ -53,3 +54,4 @@ class Item(object):
         pattern = re.compile('(\d+\.+\d+)')
         match = pattern.search(string_price)
         self.price = float(match.group())
+        return self.price

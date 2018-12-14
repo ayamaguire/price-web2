@@ -34,11 +34,21 @@ class Alert(object):
                                  query={dbc.SELF_ID: self._id},
                                  data=self.make_json())
 
+    def remove(self):
+        """" Deletes the instance from the db."""
+        database.Database.remove(collection=dbc.ALERTS,
+                                 query={dbc.SELF_ID: self._id})
+
     @classmethod
     def get_by_id(cls, _id):
         data = database.Database.find_one(collection=dbc.ALERTS, query={dbc.SELF_ID: _id})
         if data is not None:
             return cls(**data)
+
+    @classmethod
+    def get_by_email(cls, email):
+        data = database.Database.find(collection=dbc.ALERTS, query={dbc.USER_EMAIL: email})
+        return [cls(**elem) for elem in data]
 
     def send(self):
         return requests.post(constants.URL,
