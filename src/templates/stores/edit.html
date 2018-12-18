@@ -1,6 +1,132 @@
 {% extends 'base.html' %}
 {% block content %}
 
-Edit a store
+<div class="accordion settings" id="edit">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                    Update Store Name
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#edit">
+            <div class="card-body settings-button">
+                <form class="form-inline" method="post" action="{{ url_for('stores.edit_store', store_id=store._id) }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ forms[0].csrf_token }}
+                        {{ forms[0].name(placeholder=store.name, class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ forms[0].submit1(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="false" aria-controls="collapseTwo">
+                    Update Store URL
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#edit">
+            <div class="card-body">
+                <form class="form-inline" method="post" action="{{ url_for('stores.edit_store', store_id=store._id) }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ forms[1].csrf_token }}
+                        {{ forms[1].name(placeholder=store.domain, class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ forms[1].submit2(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="false" aria-controls="collapseThree">
+                    Update Tag Name
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#edit">
+            <div class="card-body">
+                <form class="form-inline" method="post" action="{{ url_for('stores.edit_store', store_id=store._id) }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ forms[2].csrf_token }}
+                        {{ forms[2].name(placeholder=store.tag_name, class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ forms[2].submit3(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour"
+                        aria-expanded="false" aria-controls="collapseFour">
+                    Update Query Object Name
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#edit">
+            <div class="card-body">
+                <form class="form-inline" method="post" action="{{ url_for('stores.edit_store', store_id=store._id) }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ forms[3].csrf_token }}
+                        {{ forms[3].name(placeholder=key, class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ forms[3].submit4(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingFive">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive"
+                        aria-expanded="false" aria-controls="collapseFive">
+                    Update Query Value
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#edit">
+            <div class="card-body">
+                <form class="form-inline" method="post" action="{{ url_for('stores.edit_store', store_id=store._id) }}" ,
+                      enctype="multipart/form-data">
+                    <div class="form-group mx-sm-3 mb-2">
+                        {{ forms[4].csrf_token }}
+                        {{ forms[4].name(placeholder=value, class="form-control") }}
+                        &nbsp; &nbsp;
+                        {{ forms[4].submit5(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}

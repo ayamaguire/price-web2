@@ -25,7 +25,8 @@ class Store(object):
         return json
 
     def save_to_db(self):
-        database.Database.insert(collection=dbc.STORES,
+        database.Database.update(collection=dbc.STORES,
+                                 query={dbc.SELF_ID: self._id},
                                  data=self.make_json())
 
     @classmethod
