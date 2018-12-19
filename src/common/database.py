@@ -4,7 +4,7 @@ import os
 
 
 class Database(object):
-    URI = os.environ.get("mongo_lab_uri")
+    URI = os.environ.get("MONGODB_URI")
     DATABASE = None
 
     @staticmethod
