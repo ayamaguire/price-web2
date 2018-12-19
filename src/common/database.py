@@ -1,9 +1,10 @@
 # set up the db connection
 import pymongo
+import os
 
 
 class Database(object):
-    URI = "mongodb://127.0.0.1:27017"
+    URI = os.environ.get("mongo_lab_uri")
     DATABASE = None
 
     @staticmethod
