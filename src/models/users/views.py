@@ -49,7 +49,7 @@ def register_user():
 
 
 @user_blueprint.route('/settings', methods=['GET', 'POST'])
-@user_decorators.require_login
+@user_decorators.requires_login
 def user_settings():
     email = flask.session[constants.EMAIL]
     email_form = UpdateEmailForm()

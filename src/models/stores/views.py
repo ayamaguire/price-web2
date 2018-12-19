@@ -18,7 +18,7 @@ def index():
 
 
 @store_blueprint.route('/edit/<string:store_id>', methods=['GET', 'POST'])
-@user_decorators.require_login
+@user_decorators.requires_login
 def edit_store(store_id):
     current_store = store.Store.get_by_id(_id=store_id)
     name_form = UpdateStoreNameForm()
@@ -50,13 +50,13 @@ def edit_store(store_id):
 
 
 @store_blueprint.route('/remove/<string:store_id>')
-@user_decorators.require_login
+@user_decorators.requires_login
 def remove_store(store_id):
     return "Remove the store with id {}".format(store_id)
 
 
 @store_blueprint.route('/create', methods=['GET', 'POST'])
-@user_decorators.require_login
+@user_decorators.requires_login
 def create_store():
     if flask.request.method == "POST":
         store_name = flask.request.form[constants.STORE_NAME]

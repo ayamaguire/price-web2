@@ -13,14 +13,14 @@ alert_blueprint = flask.Blueprint(name="alerts", import_name=__name__)
 
 
 @alert_blueprint.route('/')
-@user_decorators.require_login
+@user_decorators.requires_login
 def index():
     user_alerts = alert.Alert.get_by_email(flask.session['email'])
     return flask.render_template('alerts/index.html', alerts=user_alerts)
 
 
 @alert_blueprint.route('/create', methods=['GET', 'POST'])
-@user_decorators.require_login
+@user_decorators.requires_login
 def create_alert():
     if flask.request.method == "POST":
         item_name = flask.request.form[constants.ITEM_NAME]
@@ -39,7 +39,7 @@ def create_alert():
 
 
 @alert_blueprint.route('/remove/<string:alert_id>')
-@user_decorators.require_login
+@user_decorators.requires_login
 def remove_alert(alert_id):
     to_delete = alert.Alert.get_by_id(_id=alert_id)
     to_delete.remove()
@@ -53,7 +53,7 @@ def remove_alert(alert_id):
 
 
 @alert_blueprint.route('/edit/<string:alert_id>', methods=['GET', 'POST'])
-@user_decorators.require_login
+@user_decorators.requires_login
 def edit_alert(alert_id):
     current_alert = alert.Alert.get_by_id(_id=alert_id)
     name_form = UpdateNameForm()
@@ -78,7 +78,7 @@ def edit_alert(alert_id):
 
 
 @alert_blueprint.route('/fetch', methods=["POST"])
-@user_decorators.require_login
+@user_decorators.requires_login
 def fetch_prices():
     user_alerts = alert.Alert.get_by_email(flask.session['email'])
     for elem in user_alerts:
