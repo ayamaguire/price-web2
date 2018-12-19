@@ -5,4 +5,4 @@ passlib==1.7.1
 requests==2.20.1
 Flask-WTF==0.14.2
 WTForms==2.2.1
-
+uwsgi==2.0.17.1

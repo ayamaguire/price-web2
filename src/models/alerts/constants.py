@@ -1,11 +1,8 @@
-from src.common import database
+import os
 
-MAILGUN = "mailgun"
-mailgun_info = database.Database.find_one(collection=MAILGUN, query={"_id": "1"})
-
-URL = mailgun_info.get("url")
-API_KEY = mailgun_info.get("api_key")
-FROM = "Web Price Alerts Sandbox {}".format(mailgun_info.get("email"))
+URL = os.environ.get("mailgun_url")
+API_KEY = os.environ.get("mailgun_api_key")
+FROM = "Web Price Alerts Sandbox {}".format(os.environ.get("mailgun_email"))
 SUBJECT = "New price alert on your item {}"
 ELAPSED = 600  # 10 minutes or 600 seconds
 
