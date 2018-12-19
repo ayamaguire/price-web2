@@ -2,6 +2,7 @@ import flask
 import flask_wtf
 import wtforms
 
+from src.models.users import decorators as user_decorators
 from src.models.stores import store
 from src.models.stores import constants
 from src.models.stores import exceptions as StoreExceptions
@@ -17,10 +18,8 @@ def index():
 
 
 @store_blueprint.route('/edit/<string:store_id>', methods=['GET', 'POST'])
+@user_decorators.require_login
 def edit_store(store_id):
-    email = flask.session['email']
-    if not email:
-        return flask.render_template('users/login.html')
     current_store = store.Store.get_by_id(_id=store_id)
     name_form = UpdateStoreNameForm()
     url_form = UpdateStoreUrlForm()
@@ -51,11 +50,13 @@ def edit_store(store_id):
 
 
 @store_blueprint.route('/remove/<string:store_id>')
+@user_decorators.require_login
 def remove_store(store_id):
     return "Remove the store with id {}".format(store_id)
 
 
 @store_blueprint.route('/create', methods=['GET', 'POST'])
+@user_decorators.require_login
 def create_store():
     if flask.request.method == "POST":
         store_name = flask.request.form[constants.STORE_NAME]

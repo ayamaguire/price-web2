@@ -3,8 +3,9 @@ import flask_wtf
 import wtforms
 
 from src.models.users import constants
-from src.models.users import user, exceptions
-from src.models.alerts import alert
+from src.models.users import user
+from src.models.users import exceptions
+from src.models.users import decorators as user_decorators
 from src.common import utils
 
 
@@ -48,13 +49,11 @@ def register_user():
 
 
 @user_blueprint.route('/settings', methods=['GET', 'POST'])
+@user_decorators.require_login
 def user_settings():
     email = flask.session[constants.EMAIL]
     email_form = UpdateEmailForm()
     password_form = UpdatePasswordForm()
-    if not email:
-        # this means the user navigated directly to this page, because we don't show this link when not logged in
-        return flask.render_template('users/login.html')
     current_user = user.User.get_by_email(email)
     if flask.request.method == 'POST':
         if email_form.data and email_form.submit1.data:
@@ -73,10 +72,10 @@ def logout_user():
     flask.session[constants.EMAIL] = None
     return flask.redirect(flask.url_for('home_display'))
 
-
-@user_blueprint.route('/check_alerts/<string:user_id>')
-def check_user_alerts(user_id):
-    pass
+# TODO: enable users to look at other users alerts, maybe?
+# @user_blueprint.route('/check_alerts/<string:user_id>')
+# def check_user_alerts(user_id):
+#     pass
 
 
 class UpdateEmailForm(flask_wtf.FlaskForm):

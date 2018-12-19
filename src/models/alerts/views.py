@@ -6,21 +6,21 @@ from src.models.alerts import constants
 from src.models.alerts import alert
 from src.models.items import item
 from src.models.stores import exceptions as StoreExceptions
+from src.models.users import decorators as user_decorators
 
 
 alert_blueprint = flask.Blueprint(name="alerts", import_name=__name__)
 
 
 @alert_blueprint.route('/')
+@user_decorators.require_login
 def index():
-    email = flask.session['email']
-    if not email:
-        return flask.render_template('users/login.html')
     user_alerts = alert.Alert.get_by_email(flask.session['email'])
     return flask.render_template('alerts/index.html', alerts=user_alerts)
 
 
 @alert_blueprint.route('/create', methods=['GET', 'POST'])
+@user_decorators.require_login
 def create_alert():
     if flask.request.method == "POST":
         item_name = flask.request.form[constants.ITEM_NAME]
@@ -39,6 +39,7 @@ def create_alert():
 
 
 @alert_blueprint.route('/remove/<string:alert_id>')
+@user_decorators.require_login
 def remove_alert(alert_id):
     to_delete = alert.Alert.get_by_id(_id=alert_id)
     to_delete.remove()
@@ -52,10 +53,8 @@ def remove_alert(alert_id):
 
 
 @alert_blueprint.route('/edit/<string:alert_id>', methods=['GET', 'POST'])
+@user_decorators.require_login
 def edit_alert(alert_id):
-    email = flask.session['email']
-    if not email:
-        return flask.render_template('users/login.html')
     current_alert = alert.Alert.get_by_id(_id=alert_id)
     name_form = UpdateNameForm()
     url_form = UpdateUrlForm()
@@ -79,20 +78,18 @@ def edit_alert(alert_id):
 
 
 @alert_blueprint.route('/fetch', methods=["POST"])
+@user_decorators.require_login
 def fetch_prices():
-    email = flask.session['email']
-    if not email:
-        return flask.render_template('users/login.html')
-    user_alerts = alert.Alert.get_by_email(email)
+    user_alerts = alert.Alert.get_by_email(flask.session['email'])
     for elem in user_alerts:
         elem.item.load_price()
     user_alerts = alert.Alert.get_by_email(flask.session['email'])
     return flask.render_template('alerts/index.html', alerts=user_alerts, fetched=True)
 
 
-@alert_blueprint.route('/for_user/<string:user_id>')
-def get_alerts_for_user(user_id):
-    pass
+# @alert_blueprint.route('/for_user/<string:user_id>')
+# def get_alerts_for_user(user_id):
+#     pass
 
 
 class UpdateNameForm(flask_wtf.FlaskForm):
