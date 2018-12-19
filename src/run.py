@@ -1,5 +1,6 @@
 from src.app import app
-
+DEBUG = False
+PORT = 8000
 
 if __name__ == '__main__':
-    app.run(debug=app.config['DEBUG'], port=app.config['PORT'])
+    app.run(debug=DEBUG, port=PORT)

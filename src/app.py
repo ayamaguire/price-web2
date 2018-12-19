@@ -10,7 +10,7 @@ from src.models.alerts.views import alert_blueprint
 
 
 app = flask.Flask(__name__)
-app.config.from_object('config')
+# app.config.from_object('config')
 app.secret_key = "EZEXkgbj8hTKfFa5D3jrQxwh69fqkJQT"
 
 
