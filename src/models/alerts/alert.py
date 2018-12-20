@@ -6,17 +6,19 @@ from src.common import database
 from src.common import constants as dbc
 from src.models.alerts import constants
 from src.models.items import item
+from src.models.users import user
 
 
 class Alert(object):
 
-    def __init__(self, user_email, item_id, price_limit, last_checked=None, last_price=None, _id=None):
+    def __init__(self, user_email, item_id, price_limit, last_checked=None, last_price=None, user_id=None, _id=None):
         self.user_email = user_email
         self.item_id = item_id
         self.item = item.Item.get_by_id(self.item_id)
         self.price_limit = float(price_limit)
         self.last_checked = last_checked or datetime.datetime.utcnow()
         self.last_price = last_price
+        self.user_id = user_id or user.User.get_by_email(user_email)._id
         self._id = _id or uuid.uuid4().hex
 
     def __repr__(self):
@@ -28,6 +30,7 @@ class Alert(object):
                 dbc.PRICE_LIMIT: self.price_limit,
                 dbc.LAST_CHECKED: self.last_checked,
                 dbc.LAST_PRICE: self.last_price,
+                dbc.USER_ID: self.user_id,
                 dbc.SELF_ID: self._id}
         return json
 
@@ -51,6 +54,18 @@ class Alert(object):
     def get_by_email(cls, email):
         data = database.Database.find(collection=dbc.ALERTS, query={dbc.USER_EMAIL: email})
         return [cls(**elem) for elem in data]
+
+    @classmethod
+    def get_by_user_id(cls, user_id):
+        data = database.Database.find(collection=dbc.ALERTS, query={dbc.USER_ID: user_id})
+        return [cls(**elem) for elem in data]
+
+    @classmethod
+    def update_alerts_email(cls, user_id, new_email):
+        alerts_to_update = cls.get_by_user_id(user_id=user_id)
+        for elem in alerts_to_update:
+            elem.user_email = new_email
+            elem.save_to_db()
 
     def send(self):
         return requests.post(constants.URL,

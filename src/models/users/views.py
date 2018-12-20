@@ -6,6 +6,7 @@ from src.models.users import constants
 from src.models.users import user
 from src.models.users import exceptions
 from src.models.users import decorators as user_decorators
+from src.models.alerts import alert
 from src.common import utils
 
 
@@ -59,6 +60,7 @@ def user_settings():
         if email_form.data and email_form.submit1.data:
             update_email = email_form.data['name']
             current_user.email = update_email
+            alert.Alert.update_alerts_email(current_user._id, update_email)
             flask.session['email'] = update_email
         if password_form.data and password_form.submit2.data:
             update_password = password_form.data['name']

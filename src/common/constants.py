@@ -18,6 +18,7 @@ ITEM_ID = "item_id"
 PRICE_LIMIT = "price_limit"
 LAST_CHECKED = "last_checked"
 LAST_PRICE = "last_price"
+USER_ID = "user_id"
 ALERTS = "alerts"
 
 # store
