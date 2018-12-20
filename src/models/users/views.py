@@ -72,6 +72,12 @@ def logout_user():
     flask.session[constants.EMAIL] = None
     return flask.redirect(flask.url_for('home_display'))
 
+
+@user_blueprint.route('/admin_required')
+def admin_required():
+    return "Sorry, admin privileges are required for that."
+
+
 # TODO: enable users to look at other users alerts, maybe?
 # @user_blueprint.route('/check_alerts/<string:user_id>')
 # def check_user_alerts(user_id):
