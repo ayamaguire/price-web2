@@ -1,17 +1,18 @@
 import flask
 
 from src.common import database
-database.Database.initialize()
-
-# have to initalize database before imports
 from src.models.users.views import user_blueprint
 from src.models.stores.views import store_blueprint
 from src.models.alerts.views import alert_blueprint
 
 
 app = flask.Flask(__name__)
-# app.config.from_object('config')
 app.secret_key = "EZEXkgbj8hTKfFa5D3jrQxwh69fqkJQT"
+
+
+@app.before_first_request
+def initialize_db():
+    database.Database.initialize()
 
 
 @app.route('/')
