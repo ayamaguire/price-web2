@@ -52,7 +52,8 @@ def edit_store(store_id):
 @store_blueprint.route('/remove/<string:store_id>')
 @user_decorators.requires_login
 def remove_store(store_id):
-    return "Remove the store with id {}".format(store_id)
+    store.Store.remove(store_id)
+    return flask.redirect(flask.url_for('stores.index'))
 
 
 @store_blueprint.route('/create', methods=['GET', 'POST'])

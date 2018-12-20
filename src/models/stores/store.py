@@ -60,3 +60,7 @@ class Store(object):
     def get_all(cls):
         data = database.Database.find(collection=dbc.STORES, query={})
         return [cls(**elem) for elem in data]
+
+    @staticmethod
+    def remove(_id):
+        database.Database.remove(collection=dbc.STORES, query={dbc.SELF_ID: _id})
