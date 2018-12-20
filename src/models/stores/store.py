@@ -49,7 +49,7 @@ class Store(object):
 
     @classmethod
     def get_by_url(cls, url):
-        for i in range(len(url)+1):
+        for i in range(14, len(url)+1):
             search = list(database.Database.find(collection=dbc.STORES,
                                                  query={dbc.DOMAIN: {'$regex': '^{}'.format(url[:i])}}))
             if len(search) == 1:
